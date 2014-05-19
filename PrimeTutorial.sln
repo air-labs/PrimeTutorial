@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeTutorial", "PrimeTutorial\PrimeTutorial.csproj", "{83C25DFD-7C76-4E5A-AEF2-A9A21AE5A5B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimusPrime", "Prime\OptimusPrime\OptimusPrime.csproj", "{12E65F04-C271-4707-A380-1E98B8B078BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{83C25DFD-7C76-4E5A-AEF2-A9A21AE5A5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C25DFD-7C76-4E5A-AEF2-A9A21AE5A5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C25DFD-7C76-4E5A-AEF2-A9A21AE5A5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E65F04-C271-4707-A380-1E98B8B078BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E65F04-C271-4707-A380-1E98B8B078BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E65F04-C271-4707-A380-1E98B8B078BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E65F04-C271-4707-A380-1E98B8B078BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
