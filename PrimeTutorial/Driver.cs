@@ -6,6 +6,17 @@ namespace PrimeTutorial
 {
     class Driver : IFunctionalBlock<Tuple<double, double, double>, Tuple<double, double, double>>
     {
+        private bool throwsException;
+
+        public Driver() : this(true)
+        {
+        }
+
+        public Driver(bool throwsException) : base()
+        {
+            this.throwsException = throwsException;
+        }
+
         public Tuple<double, double, double> Process(Tuple<double, double, double> input)
         {
             var point3 = new Point(input.Item1, input.Item2);
@@ -15,7 +26,7 @@ namespace PrimeTutorial
             var lengthSquared = new Vector(point2.X, point2.Y).LengthSquared;
             var h = Math.Sqrt(1 - lengthSquared / 4);
 
-            if (Double.IsNaN(h))
+            if (Double.IsNaN(h) && throwsException)
             {
                 throw new Exception("Target point is unreachable with given angle: " + input.ToString());
             }
