@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calibrator.cs" />
+    <Compile Include="Core\Data\ManipulatorAngles.cs" />
     <Compile Include="Core\Data\ManipulatorPosition.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="Program.cs" />
