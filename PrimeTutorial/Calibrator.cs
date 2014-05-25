@@ -1,9 +1,10 @@
 ﻿using Prime;
 using System;
+using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial
 {
-    class Calibrator : IFunctionalBlock<Tuple<double, double, double>, Tuple<int, int, int>>
+    class Calibrator : IFunctionalBlock<ManipulatorAngles, ManipulatorSignals>
     {
         private static readonly Tuple<double, double> betta1Map = Tuple.Create(0.0, Math.PI);
 
@@ -13,12 +14,12 @@ namespace PrimeTutorial
 
         private static readonly Tuple<int, int> signal = Tuple.Create(0, 255);
 
-        public Tuple<int, int, int> Process(Tuple<double, double, double> input)
+        public ManipulatorSignals Process(ManipulatorAngles input)
         {
-            return Tuple.Create(
-                TranslateAngleToSignal(input.Item1, betta1Map),
-                TranslateAngleToSignal(input.Item2, betta2Map),
-                TranslateAngleToSignal(input.Item3, betta3Map));
+            return new ManipulatorSignals(
+                TranslateAngleToSignal(input.Betta1, betta1Map),
+                TranslateAngleToSignal(input.Betta2, betta2Map),
+                TranslateAngleToSignal(input.Betta3, betta3Map));
         }
 
         private int TranslateAngleToSignal(double angle, Tuple<double, double> angleMap)
