@@ -17,5 +17,10 @@ namespace PrimeTutorial.Core.Data
             Elbow = elbow;
             Palm = palm;
         }
+
+        public override string ToString()
+        {
+            return string.Format("ManipulatorSignals(Shoulder: {0}, Elbow: {1}, Palm: {2})", Shoulder, Elbow, Palm);
+        }
     }
 }
