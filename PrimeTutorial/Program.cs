@@ -1,9 +1,6 @@
 ﻿using Prime;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial
 {
@@ -14,7 +11,7 @@ namespace PrimeTutorial
             var factory = new LibertyFactory();
             var block = factory.CreateChain(new Driver()).Link(new Calibrator()).ToFunctionalBlock();
 
-            Console.WriteLine(block.Process(Tuple.Create(1.0, 1.0, Math.PI / 4)));
+            Console.WriteLine(block.Process(new ManipulatorPosition(1.0, 1.0, Math.PI / 4)));
         }
     }
 }

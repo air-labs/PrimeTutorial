@@ -1,10 +1,11 @@
 ﻿using Prime;
 using System;
 using System.Windows;
+using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial
 {
-    class Driver : IFunctionalBlock<Tuple<double, double, double>, Tuple<double, double, double>>
+    class Driver : IFunctionalBlock<ManipulatorPosition, ManipulatorAngles>
     {
         private bool isThrowsException;
 
@@ -13,11 +14,11 @@ namespace PrimeTutorial
             this.isThrowsException = isThrowsException;
         }
 
-        public Tuple<double, double, double> Process(Tuple<double, double, double> input)
+        public ManipulatorAngles Process(ManipulatorPosition input)
         {
-            var point3 = new Point(input.Item1, input.Item2);
+            var point3 = new Point(input.X, input.Y);
             
-            var point2 = new Point(point3.X - Math.Cos(input.Item3), point3.Y + Math.Sin(input.Item3));
+            var point2 = new Point(point3.X - Math.Cos(input.Alpha), point3.Y + Math.Sin(input.Alpha));
 
             var lengthSquared = new Vector(point2.X, point2.Y).LengthSquared;
             var h = Math.Sqrt(1 - lengthSquared / 4);
@@ -32,7 +33,7 @@ namespace PrimeTutorial
 
             var point0 = new Point(0, 0);
 
-            return Tuple.Create(
+            return new ManipulatorAngles(
                 AngleBetweenVectors(new Vector(1.0, 0), CreateVector(point1, point0)),
                 AngleBetweenVectors(CreateVector(point0, point1), CreateVector(point2, point1)),
                 AngleBetweenVectors(CreateVector(point1, point2), CreateVector(point3, point2)));
