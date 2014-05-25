@@ -1,9 +1,9 @@
-﻿using Prime;
-using System;
+﻿using System;
 using System.Windows;
+using Prime;
 using PrimeTutorial.Core.Data;
 
-namespace PrimeTutorial
+namespace PrimeTutorial.Core.FunctionalBlocks
 {
     class Driver : IFunctionalBlock<ManipulatorPosition, ManipulatorAngles>
     {

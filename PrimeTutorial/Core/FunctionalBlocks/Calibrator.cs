@@ -1,8 +1,8 @@
-﻿using Prime;
-using System;
+﻿using System;
+using Prime;
 using PrimeTutorial.Core.Data;
 
-namespace PrimeTutorial
+namespace PrimeTutorial.Core.FunctionalBlocks
 {
     class Calibrator : IFunctionalBlock<ManipulatorAngles, ManipulatorSignals>
     {
