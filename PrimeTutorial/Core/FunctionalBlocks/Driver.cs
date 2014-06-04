@@ -34,9 +34,9 @@ namespace PrimeTutorial.Core.FunctionalBlocks
             var point0 = new Point(0, 0);
 
             return new ManipulatorAngles(
-                AngleBetweenVectors(new Vector(1.0, 0), CreateVector(point1, point0)),
-                AngleBetweenVectors(CreateVector(point0, point1), CreateVector(point2, point1)),
-                AngleBetweenVectors(CreateVector(point1, point2), CreateVector(point3, point2)));
+                AngleBetweenVectors(new Vector(1.0, 0), CreateVector(point0, point1)),
+                AngleBetweenVectors(CreateVector(point1, point0), CreateVector(point1, point2)),
+                AngleBetweenVectors(CreateVector(point2, point1), CreateVector(point2, point3)));
         }
 
         private Vector CreateVector(Point point1, Point point2)

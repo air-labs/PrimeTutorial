@@ -32,7 +32,7 @@ namespace PrimeTutorial.Tests.FunctionalBlocks
         [Test]
         public void TestNanWithoutException()
         {
-            var driver = new Driver(false);
+            var driver = new Driver(false); 
             var output = driver.Process(failManipulatorPosition);
 
             Assert.IsNaN(output.Betta1);
