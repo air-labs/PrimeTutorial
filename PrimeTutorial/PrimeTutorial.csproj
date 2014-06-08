@@ -52,8 +52,17 @@
     <Compile Include="Core\Data\ManipulatorAngles.cs" />
     <Compile Include="Core\Data\ManipulatorPosition.cs" />
     <Compile Include="Core\Data\ManipulatorSignals.cs" />
+    <Compile Include="Core\Extensions\TutorialExtensions.cs" />
+    <Compile Include="Core\FormsData\FormAngles.cs" />
+    <Compile Include="Core\Forms\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\FunctionalBlocks\Calibrator.cs" />
     <Compile Include="Core\FunctionalBlocks\Driver.cs" />
+    <Compile Include="Core\FunctionalBlocks\IfBlock.cs" />
     <Compile Include="Core\FunctionalBlocks\ManipulatorEmulator.cs" />
     <Compile Include="Core\Forms\ManipulatorForm.cs">
       <SubType>Form</SubType>
@@ -75,10 +84,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Core\Forms\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\ManipulatorForm.resx">
       <DependentUpon>ManipulatorForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
