@@ -17,7 +17,7 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
         public ManipulatorEmulator()
         {
-            _form.SetAngles(_angles);
+            _form.SetAngles(FormAngles.CreateDummyAngles(_angles));
             new Thread(() => Application.Run(_form)).Start();
         }
 
@@ -27,13 +27,13 @@ namespace PrimeTutorial.Core.FunctionalBlocks
             while (formAngles.IsMove())
             {
                 formAngles.MakeStep();
-                _form.SetAngles(formAngles.ToManipulatorAngles());
+
+                _form.SetAngles(formAngles);
                 Thread.Sleep(Delay);
             }
 
-            _form.SetAngles(input);
+            _form.SetAngles(FormAngles.CreateDummyAngles(input));
             Thread.Sleep(Delay);
-
 
             _angles = input;
             return true;

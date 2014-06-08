@@ -2,14 +2,14 @@
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.Windows.Forms;
-using PrimeTutorial.Core.Data;
+using PrimeTutorial.Core.FormsData;
 
 namespace PrimeTutorial.Core.Forms
 {
     public partial class ManipulatorForm : BaseForm
     {
-        private readonly ConcurrentQueue<ManipulatorAngles> _queue = new ConcurrentQueue<ManipulatorAngles>();
-        private ManipulatorAngles _angles = new ManipulatorAngles(0, 0, 0);
+        private readonly ConcurrentQueue<FormAngles> _queue = new ConcurrentQueue<FormAngles>();
+        private FormAngles _angles = FormAngles.CreateDummyAngles(0, 0, 0);
 
         private readonly Pen _axisPen = new Pen(Color.Black, 0.01f);
         private readonly Pen _linkPen = new Pen(Color.Tan, 0.1f);
@@ -20,7 +20,7 @@ namespace PrimeTutorial.Core.Forms
             InitializeComponent();
         }
 
-        public void SetAngles(ManipulatorAngles angles)
+        public void SetAngles(FormAngles angles)
         {
             _queue.Enqueue(angles);
         }
@@ -40,7 +40,7 @@ namespace PrimeTutorial.Core.Forms
 
         private void ManipulatorForm_Paint(object sender, PaintEventArgs e)
         {
-            ManipulatorAngles angles;
+            FormAngles angles;
             if (_queue.TryDequeue(out angles))
             {
                 _angles = angles;
@@ -51,17 +51,17 @@ namespace PrimeTutorial.Core.Forms
 
             PushGraphics();
 
-            RotateGraphics(_angles.Betta1);
+            RotateGraphics(_angles.Beta1);
             DrawLine(_linkPen, 0, 0, 1, 0);
 
             TranslateGraphics(1, 0);
-            RotateGraphics(Math.PI + _angles.Betta2);
+            RotateGraphics(Math.PI + _angles.Beta2);
 
             DrawLine(_linkPen, 0, 0, 1, 0);
             DrawPoint(_jointBrush, 0, 0, 0.2);
 
             TranslateGraphics(1, 0);
-            RotateGraphics(Math.PI + _angles.Betta3);
+            RotateGraphics(Math.PI + _angles.Beta3);
 
             DrawLine(_linkPen, 0, 0, 1, 0);
             DrawPoint(_jointBrush, 0, 0, 0.2);

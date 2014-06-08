@@ -3,21 +3,32 @@ using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial.Core.FormsData
 {
-    class FormAngles
+    public class FormAngles
     {
-        private double _beta1;
-        private double _beta2;
-        private double _beta3;
+        public double Beta1 { get; private set; }
+        public double Beta2 { get; private set; }
+        public double Beta3 { get; private set; }
 
         private readonly ManipulatorAngles _destination;
 
         private readonly double _step;
 
+        public static FormAngles CreateDummyAngles(ManipulatorAngles destination)
+        {
+            return new FormAngles(destination, destination, Math.PI);
+        }
+
+        public static FormAngles CreateDummyAngles(double beta1, double beta2, double beta3)
+        {
+            var destination = new ManipulatorAngles(beta1, beta2, beta3);
+            return CreateDummyAngles(destination);
+        }
+
         public FormAngles(ManipulatorAngles source, ManipulatorAngles destination, double step)
         {
-            _beta1 = source.Betta1;
-            _beta2 = source.Betta2;
-            _beta3 = source.Betta3;
+            Beta1 = source.Betta1;
+            Beta2 = source.Betta2;
+            Beta3 = source.Betta3;
 
             _destination = destination;
             _step = step;
@@ -25,21 +36,21 @@ namespace PrimeTutorial.Core.FormsData
 
         public bool IsMove()
         {
-            return HasNextStep(_beta1, _destination.Betta1) 
-                || HasNextStep(_beta2, _destination.Betta2)
-                || HasNextStep(_beta3, _destination.Betta3);
+            return HasNextStep(Beta1, _destination.Betta1) 
+                || HasNextStep(Beta2, _destination.Betta2)
+                || HasNextStep(Beta3, _destination.Betta3);
         }
 
         public void MakeStep()
         {
-            _beta1 = NextStep(_beta1, _destination.Betta1);
-            _beta2 = NextStep(_beta2, _destination.Betta2);
-            _beta3 = NextStep(_beta3, _destination.Betta3);
+            Beta1 = NextStep(Beta1, _destination.Betta1);
+            Beta2 = NextStep(Beta2, _destination.Betta2);
+            Beta3 = NextStep(Beta3, _destination.Betta3);
         }
 
         public ManipulatorAngles ToManipulatorAngles()
         {
-            return new ManipulatorAngles(_beta1, _beta2, _beta3);
+            return new ManipulatorAngles(Beta1, Beta2, Beta3);
         }
 
         private bool HasNextStep(double source, double destination)
