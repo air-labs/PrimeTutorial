@@ -25,7 +25,7 @@ namespace PrimeTutorial.Core.Forms
 
         protected virtual void InitializeTimer()
         {
-            Timer = new Timer()
+            Timer = new Timer
             {
                 Enabled = true,
                 Interval = 100
