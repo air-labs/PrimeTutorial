@@ -30,22 +30,17 @@
         {
             this.SuspendLayout();
             // 
-            // EmulatorForm
+            // ManipulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
-            this.Name = "EmulatorForm";
-            this.Text = "EmulatorForm";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EmulatorForm_FormClosed);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EmulatorForm_Paint);
-            this.Resize += new System.EventHandler(this.EmulatorForm_Resize);
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "ManipulatorForm";
+            this.Load += new System.EventHandler(this.ManipulatorForm_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ManipulatorForm_Paint);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        partial void Main();
     }
 }

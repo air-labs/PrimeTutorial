@@ -1,40 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using PrimeTutorial.Core.Data;
-using Point = System.Windows.Point;
 
 namespace PrimeTutorial.Core.Forms
 {
-    public partial class ManipulatorForm : Form
+    public partial class ManipulatorForm : BaseForm
     {
-        
         private readonly ConcurrentQueue<ManipulatorAngles> _queue = new ConcurrentQueue<ManipulatorAngles>();
+        private ManipulatorAngles _angles = new ManipulatorAngles(0, 0, 0);
 
-        private bool _isWorking = true;
-
-        private readonly Point[] _points =
-        {
-            new Point(0, 0),
-            new Point(0, 1),
-            new Point(1, 1),
-            new Point(1, 0) 
-        };
-
-        private readonly int scale = 100;
+        private readonly Pen _axisPen = new Pen(Color.Black, 0.01f);
+        private readonly Pen _linkPen = new Pen(Color.Tan, 0.1f);
+        private readonly Brush _jointBrush = Brushes.Maroon;
 
         public ManipulatorForm()
         {
             InitializeComponent();
-
-            var thread = new Thread(Algorithm)
-            {
-                IsBackground = true
-            };
-
-            thread.Start();
         }
 
         public void SetAngles(ManipulatorAngles angles)
@@ -42,62 +25,51 @@ namespace PrimeTutorial.Core.Forms
             _queue.Enqueue(angles);
         }
 
-        private Point Translate(Point point)
+        protected override void InitializeGraphics()
         {
-            return new Point(point.X * scale + ClientRectangle.Width / 2.0, ClientRectangle.Height - point.Y * scale);
+            Graphics = CreateGraphics();
+            TranslateGraphics(ClientRectangle.Width / 2.0, ClientRectangle.Height - 50);
+            ScaleGraphics(100);
         }
 
-        private void EmulatorForm_Paint(object sender, PaintEventArgs e)
+        private void ManipulatorForm_Load(object sender, EventArgs e)
         {
-            var graphics = CreateGraphics();
-            graphics.Clear(Color.Azure);
+            Text = "Manipulator Emulator";
+            Size = new Size(700, 400);
+        }
 
-            for (var i = 0; i < _points.Length - 1; i++)
+        private void ManipulatorForm_Paint(object sender, PaintEventArgs e)
+        {
+            ManipulatorAngles angles;
+            if (_queue.TryDequeue(out angles))
             {
-                var point1 = Translate(_points[i]);
-                var point2 = Translate(_points[i + 1]);
-
-                graphics.DrawLine(new Pen(Brushes.Tan, 3), (int) point1.X, (int) point1.Y, (int) point2.X, (int) point2.Y);
+                _angles = angles;
             }
 
-            foreach (var origin in _points)
-            {
-                var point = Translate(origin);
-                graphics.FillEllipse(Brushes.Maroon, (int) point.X - 5, (int) point.Y - 5, 10, 10);
-            }
-        }
+            DrawLine(_axisPen, 0, 3, 0, -0.3);
+            DrawLine(_axisPen, 3, 0, -3, 0);
 
-        private void Algorithm()
-        {
-            while (_isWorking)
-            {
-                ManipulatorAngles angles;
-                if (_queue.TryDequeue(out angles))
-                {
-                    _points[1].X = Math.Cos(angles.Betta1);
-                    _points[1].Y = Math.Sin(angles.Betta1);
+            PushGraphics();
 
-                    _points[2].X = _points[1].X - Math.Cos(angles.Betta1 + angles.Betta2);
-                    _points[2].Y = _points[1].Y - Math.Sin(angles.Betta1 + angles.Betta2);
+            RotateGraphics(_angles.Betta1);
+            DrawLine(_linkPen, 0, 0, 1, 0);
 
-                    _points[3].X = _points[2].X + Math.Cos(angles.Betta1 + angles.Betta2 + angles.Betta3);
-                    _points[3].Y = _points[2].Y + Math.Sin(angles.Betta1 + angles.Betta2 + angles.Betta3);
+            TranslateGraphics(1, 0);
+            RotateGraphics(Math.PI + _angles.Betta2);
 
-                    Refresh();
-                }
+            DrawLine(_linkPen, 0, 0, 1, 0);
+            DrawPoint(_jointBrush, 0, 0, 0.2);
 
-                Thread.Sleep(100);
-            }
-        }
+            TranslateGraphics(1, 0);
+            RotateGraphics(Math.PI + _angles.Betta3);
 
-        private void EmulatorForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            _isWorking = false;
-        }
+            DrawLine(_linkPen, 0, 0, 1, 0);
+            DrawPoint(_jointBrush, 0, 0, 0.2);
+            DrawPoint(_jointBrush, 1, 0, 0.2);
 
-        private void EmulatorForm_Resize(object sender, EventArgs e)
-        {
-            Refresh();
+            PopGraphics();
+
+            DrawPoint(_jointBrush, 0, 0, 0.2);
         }
 
     }
