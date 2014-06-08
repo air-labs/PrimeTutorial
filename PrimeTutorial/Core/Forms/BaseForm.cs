@@ -11,6 +11,8 @@ namespace PrimeTutorial.Core.Forms
         protected Graphics Graphics;
         private readonly Stack<GraphicsState> _graphicsStates = new Stack<GraphicsState>();
 
+        protected readonly Pen AxisPen = new Pen(Color.Black, 0.01f);
+
         protected Timer Timer;
 
         protected BaseForm()
