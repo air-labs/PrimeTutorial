@@ -48,11 +48,6 @@ namespace PrimeTutorial.Core.FormsData
             Beta3 = NextStep(Beta3, _destination.Betta3);
         }
 
-        public ManipulatorAngles ToManipulatorAngles()
-        {
-            return new ManipulatorAngles(Beta1, Beta2, Beta3);
-        }
-
         private bool HasNextStep(double source, double destination)
         {
             return Math.Abs(destination - source) > _step;
