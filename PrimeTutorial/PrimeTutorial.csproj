@@ -73,6 +73,7 @@
     <Compile Include="Demos\Demo01.cs" />
     <Compile Include="Demos\Demo02.cs" />
     <Compile Include="Demos\Demo03.cs" />
+    <Compile Include="Demos\Demo04.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\FunctionalBlocks\DriverTest.cs" />
