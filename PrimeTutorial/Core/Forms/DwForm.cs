@@ -2,19 +2,14 @@
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial.Core.Forms
 {
-    public partial class DwForm : Form
+    public partial class DwForm : BaseForm
     {
         private readonly ConcurrentQueue<Dwm> _queue = new ConcurrentQueue<Dwm>();
-        private readonly ConcurrentQueue<Tuple<double, double, double>> _points = new ConcurrentQueue<Tuple<double, double, double>>(); 
-
-        private readonly Timer _timer = new Timer();
-
-        private Graphics _graphics;
+        private readonly ConcurrentQueue<Tuple<double, double, double>> _points = new ConcurrentQueue<Tuple<double, double, double>>();
 
         private Matrix matrix = new Matrix();
 
@@ -28,7 +23,35 @@ namespace PrimeTutorial.Core.Forms
             _queue.Enqueue(dwm);
         }
 
-        private void Calculate(object sender, EventArgs e)
+        protected override void InitializeGraphics()
+        {
+            base.InitializeGraphics();
+            TranslateGraphics(ClientRectangle.Width / 2.0, ClientRectangle.Height / 2.0);
+            ScaleGraphics(25);
+        }
+
+        private void DwForm_Load(object sender, EventArgs e)
+        {
+            Text = "Double Wheel Emulator";
+            Size = new Size(800, 600);
+        }
+
+        private void DwForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            DrawLine(AxisPen, 0, 10, 0, -10);
+            DrawLine(AxisPen, 10, 0, -10, 0);
+
+            Calculate();
+
+            PushGraphics();
+
+            Graphics.MultiplyTransform(matrix);
+            DrawRectangle(Brushes.MediumAquamarine, 0, 0, 2, 1);
+            
+            PopGraphics();
+        }
+
+        private void Calculate()
         {
             Dwm dwm;
             if (_points.IsEmpty && !_queue.IsEmpty && _queue.TryDequeue(out dwm))
@@ -54,7 +77,7 @@ namespace PrimeTutorial.Core.Forms
                 }
 
                 double w = v / r;
-                var steps = (int) dwm.Time/time;
+                var steps = (int)dwm.Time / time;
                 for (var i = 0; i < steps; i++)
                 {
                     double angle = -w * time;
@@ -70,50 +93,7 @@ namespace PrimeTutorial.Core.Forms
             {
                 matrix.Rotate((float)point.Item3);
                 matrix.Translate((float)point.Item1, (float)point.Item2);
-
-                Refresh();
             }
-        }
-
-        private void DwForm_Load(object sender, EventArgs e)
-        {
-
-            _timer.Tick += Calculate;
-            _timer.Interval = 100;
-            _timer.Enabled = true;
-            _timer.Start();
-        }
-
-        private void DwForm_Paint(object sender, PaintEventArgs e)
-        {
-            _graphics = CreateGraphics();
-            _graphics.ResetTransform();
-
-            _graphics.TranslateTransform((float)(ClientRectangle.Width / 2.0), (float)(ClientRectangle.Height / 2.0));
-            _graphics.ScaleTransform((float)scale, (float)-scale);
-
-            _graphics.Clear(Color.Azure);
-
-            _graphics.DrawLine(new Pen(Color.Black, (float) 0.01), 0, 10, 0, -10);
-            _graphics.DrawLine(new Pen(Color.Black, (float) 0.01), 10, 0, -10, 0);
-
-            _graphics.MultiplyTransform(matrix);
-            DrawRectangle(0, 0, 2, 1);
-        }
-
-        private void DrawPoint(double x, double y, double radius)
-        {
-            _graphics.FillEllipse(Brushes.Maroon, (float) (x - radius / 2), (float) (y - radius / 2), (float) radius, (float) radius);
-        }
-
-        private void DrawRectangle(double x, double y, double width, double height)
-        {
-            _graphics.FillRectangle(Brushes.MediumAquamarine, (float) (x - width / 2), (float) (y - height / 2), (float) width, (float) height);
-        }
-
-        private void DwForm_Resize(object sender, EventArgs e)
-        {
-            Refresh();
         }
     }
 }

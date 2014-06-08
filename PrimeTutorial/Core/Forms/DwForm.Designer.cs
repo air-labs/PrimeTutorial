@@ -2,8 +2,6 @@
 {
     partial class DwForm
     {
-        private const double scale = 25;
-
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -35,13 +33,10 @@
             // DwForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "DwForm";
-            this.Text = "DwForm";
             this.Load += new System.EventHandler(this.DwForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DwForm_Paint);
-            this.Resize += new System.EventHandler(this.DwForm_Resize);
             this.ResumeLayout(false);
 
         }
