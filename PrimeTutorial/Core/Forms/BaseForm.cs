@@ -55,7 +55,7 @@ namespace PrimeTutorial.Core.Forms
             Graphics.DrawLine(pen, (float) x1, (float) y1, (float) x2, (float) y2);
         }
 
-        private void DrawRectangle(Brush brush, double x, double y, double width, double height)
+        protected void DrawRectangle(Brush brush, double x, double y, double width, double height)
         {
             Graphics.FillRectangle(brush, (float) (x - width / 2), (float) (y - height / 2), (float) width, (float) height);
         }
