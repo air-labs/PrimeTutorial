@@ -7,7 +7,7 @@ namespace PrimeTutorial.Core.FunctionalBlocks
     public class DwmDriver : IFunctionalBlock<Geometry, Dwm[]>
     {
         private const double VMax = 20;
-        private const double A = 10;
+        private const double A = 20;
         private const double Base = 1;
 
         public Dwm[] Process(Geometry input)
