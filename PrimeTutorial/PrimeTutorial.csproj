@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Data\Dwm.cs" />
+    <Compile Include="Core\Data\Geometry.cs" />
+    <Compile Include="Core\Data\GeometryType.cs" />
     <Compile Include="Core\Data\ManipulatorAngles.cs" />
     <Compile Include="Core\Data\ManipulatorPosition.cs" />
     <Compile Include="Core\Data\ManipulatorSignals.cs" />
