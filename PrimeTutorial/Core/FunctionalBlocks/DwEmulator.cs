@@ -45,8 +45,8 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
         private void CalculatePosition(Dwm dwm, double time, double delta)
         {
-            var vLeft = time * (dwm.VLeft1 - dwm.VLeft0) / dwm.Time + dwm.VLeft0;
-            var vRight = time * (dwm.VRgiht1 - dwm.VRight0) / dwm.Time + dwm.VRight0;
+            var vLeft = time * (dwm.VLeftFinish - dwm.VLeftStart) / dwm.Time + dwm.VLeftStart;
+            var vRight = time * (dwm.VRgihtFinish - dwm.VRightStart) / dwm.Time + dwm.VRightStart;
 
             double radius, v, offset;
             if (Math.Abs(vLeft + vRight) < 0.0001)
