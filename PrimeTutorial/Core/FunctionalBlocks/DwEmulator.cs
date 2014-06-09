@@ -13,9 +13,11 @@ namespace PrimeTutorial.Core.FunctionalBlocks
         private readonly DwForm _form = new DwForm();
 
         private const int Delay = 100;
+        private const double Base = 1;
+        private const double Delta = 0.1;
 
         private readonly Matrix _matrix = new Matrix();
-        private double _angle = 0;
+        private double _angle;
 
         public DwEmulator()
         {
@@ -24,45 +26,53 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
         public bool Process(Dwm input)
         {
-            double vl = input.VLeft1;
-            double vr = input.VRgiht1;
+            var time = 0d;
 
-            double b = 1;
-            double time = 0.1;
-
-            double r, v, offset;
-            if (Math.Abs(vl + vr) < 0.0001)
+            while (time < input.Time)
             {
-                r = b;
-                v = Math.Sign(vl - vr) * (Math.Abs(vl) + Math.Abs(vr));
+                CalculatePosition(input, time, Delta);
+
+                time += Delta;
+                Thread.Sleep(Delay);
+            }
+
+            CalculatePosition(input, input.Time, time - input.Time);
+            Thread.Sleep(Delay);
+
+            return true;
+        }
+
+        private void CalculatePosition(Dwm dwm, double time, double delta)
+        {
+            var vLeft = time * (dwm.VLeft1 - dwm.VLeft0) / dwm.Time + dwm.VLeft0;
+            var vRight = time * (dwm.VRgiht1 - dwm.VRight0) / dwm.Time + dwm.VRight0;
+
+            double radius, v, offset;
+            if (Math.Abs(vLeft + vRight) < 0.0001)
+            {
+                radius = Base;
+                v = Math.Sign(vLeft - vRight) * (Math.Abs(vLeft) + Math.Abs(vRight));
                 offset = 0;
             }
             else
             {
-                r = b * (Math.Abs(vl) + Math.Abs(vr)) / (Math.Abs(vl) - Math.Abs(vr));
-                v = (vl + vr) / 2.0;
+                radius = Base * (Math.Abs(vLeft) + Math.Abs(vRight)) / (Math.Abs(vLeft) - Math.Abs(vRight));
+                v = (vLeft + vRight) / 2.0;
                 offset = v;
             }
 
-            double w = v / r;
-            var steps = (int) input.Time / time;
-            for (var i = 0; i < steps; i++)
-            {
-                double angle = -w * time;
-                double y = Math.Cos(angle) * offset * time;
-                double x = Math.Sin(angle) * offset * time;
+            var w = v / radius;
 
-                _matrix.Rotate((float) (angle * 180 / Math.PI));
-                _matrix.Translate((float) x, (float) y);
+            var angle = -w * delta;
+            var y = Math.Cos(angle) * offset * delta;
+            var x = Math.Sin(angle) * offset * delta;
 
-                _angle += angle;
+            _matrix.Rotate((float) (angle * 180 / Math.PI));
+            _matrix.Translate((float) x, (float) y);
 
-                _form.SetPosition(Tuple.Create<double, double, double>(_matrix.OffsetX, _matrix.OffsetY, _angle));
+            _angle += angle;
 
-                Thread.Sleep(Delay);
-            }
-
-            return true;
+            _form.SetPosition(Tuple.Create<double, double, double>(_matrix.OffsetX, _matrix.OffsetY, _angle));
         }
     }
 }
