@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using PrimeTutorial.Core.Data;
 
 namespace PrimeTutorial.Core.Forms
 {
@@ -10,14 +8,14 @@ namespace PrimeTutorial.Core.Forms
     {
         private readonly ConcurrentQueue<Tuple<double, double, double>> _points = new ConcurrentQueue<Tuple<double, double, double>>();
 
-        private Matrix matrix = new Matrix();
+        private Tuple<double, double, double> _point = new Tuple<double, double, double>(0, 0, 0);
 
         public DwForm()
         {
             InitializeComponent();
         }
 
-        public void PutDwm(Tuple<double, double, double> point)
+        public void SetPosition(Tuple<double, double, double> point)
         {
             _points.Enqueue(point);
         }
@@ -40,16 +38,17 @@ namespace PrimeTutorial.Core.Forms
             DrawLine(AxisPen, 0, 10, 0, -10);
             DrawLine(AxisPen, 10, 0, -10, 0);
 
+            PushGraphics();
+
             Tuple<double, double, double> point;
             if (!_points.IsEmpty && _points.TryDequeue(out point))
             {
-                matrix.Rotate((float) point.Item3);
-                matrix.Translate((float) point.Item1, (float) point.Item2);
+                _point = point;
             }
 
-            PushGraphics();
-
-            Graphics.MultiplyTransform(matrix);
+            TranslateGraphics(_point.Item1, _point.Item2);
+            RotateGraphics(_point.Item3);
+            
             DrawRectangle(Brushes.MediumAquamarine, 0, 0, 2, 1);
             
             PopGraphics();

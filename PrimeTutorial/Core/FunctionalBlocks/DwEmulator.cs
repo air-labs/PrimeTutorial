@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Windows.Forms;
-using NUnit.Framework.Constraints;
 using Prime;
 using PrimeTutorial.Core.Data;
 using PrimeTutorial.Core.Forms;
@@ -13,6 +13,9 @@ namespace PrimeTutorial.Core.FunctionalBlocks
         private readonly DwForm _form = new DwForm();
 
         private const int Delay = 100;
+
+        private readonly Matrix _matrix = new Matrix();
+        private double _angle = 0;
 
         public DwEmulator()
         {
@@ -49,7 +52,13 @@ namespace PrimeTutorial.Core.FunctionalBlocks
                 double y = Math.Cos(angle) * offset * time;
                 double x = Math.Sin(angle) * offset * time;
 
-                _form.PutDwm(Tuple.Create(x, y, angle * 180 / Math.PI));
+                _matrix.Rotate((float) (angle * 180 / Math.PI));
+                _matrix.Translate((float) x, (float) y);
+
+                _angle += angle;
+
+                _form.SetPosition(Tuple.Create<double, double, double>(_matrix.OffsetX, _matrix.OffsetY, _angle));
+
                 Thread.Sleep(Delay);
             }
 
