@@ -11,6 +11,8 @@ namespace PrimeTutorial.Core.Forms
         protected Graphics Graphics;
         private readonly Stack<GraphicsState> _graphicsStates = new Stack<GraphicsState>();
 
+        protected readonly Pen AxisPen = new Pen(Color.Black, 0.01f);
+
         protected Timer Timer;
 
         protected BaseForm()
@@ -25,7 +27,7 @@ namespace PrimeTutorial.Core.Forms
 
         protected virtual void InitializeTimer()
         {
-            Timer = new Timer()
+            Timer = new Timer
             {
                 Enabled = true,
                 Interval = 100
@@ -55,7 +57,7 @@ namespace PrimeTutorial.Core.Forms
             Graphics.DrawLine(pen, (float) x1, (float) y1, (float) x2, (float) y2);
         }
 
-        private void DrawRectangle(Brush brush, double x, double y, double width, double height)
+        protected void DrawRectangle(Brush brush, double x, double y, double width, double height)
         {
             Graphics.FillRectangle(brush, (float) (x - width / 2), (float) (y - height / 2), (float) width, (float) height);
         }
