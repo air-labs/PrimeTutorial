@@ -81,6 +81,9 @@
     <Compile Include="Core\Forms\ManipulatorForm.Designer.cs">
       <DependentUpon>ManipulatorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\FunctionalBlocks\SimpleDwmDriver.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Demos\Demo01.cs" />
     <Compile Include="Demos\Demo02.cs" />
     <Compile Include="Demos\Demo03.cs" />
