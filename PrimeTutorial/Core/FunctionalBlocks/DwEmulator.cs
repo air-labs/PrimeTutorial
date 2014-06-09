@@ -27,6 +27,11 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
         public bool Process(Dwm input)
         {
+            if (Math.Abs(input.Time) < 0.0000001)
+            {
+                return true;
+            }
+
             var time = 0d;
             var delta = Delta;
 
