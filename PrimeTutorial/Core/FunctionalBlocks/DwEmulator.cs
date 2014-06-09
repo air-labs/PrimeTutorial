@@ -31,7 +31,7 @@ namespace PrimeTutorial.Core.FunctionalBlocks
             if (Math.Abs(vl + vr) < 0.0001)
             {
                 r = b;
-                v = Math.Abs(vl) + Math.Abs(vr);
+                v = Math.Sign(vl - vr) * (Math.Abs(vl) + Math.Abs(vr));
                 offset = 0;
             }
             else
