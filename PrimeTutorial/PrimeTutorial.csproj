@@ -73,6 +73,7 @@
     <Compile Include="Core\FunctionalBlocks\Calibrator.cs" />
     <Compile Include="Core\FunctionalBlocks\Driver.cs" />
     <Compile Include="Core\FunctionalBlocks\DwEmulator.cs" />
+    <Compile Include="Core\FunctionalBlocks\DwmDriver.cs" />
     <Compile Include="Core\FunctionalBlocks\IfBlock.cs" />
     <Compile Include="Core\FunctionalBlocks\ManipulatorEmulator.cs" />
     <Compile Include="Core\Forms\ManipulatorForm.cs">
