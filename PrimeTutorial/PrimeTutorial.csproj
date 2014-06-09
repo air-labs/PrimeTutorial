@@ -55,6 +55,7 @@
     <Compile Include="Core\Data\ManipulatorSignals.cs" />
     <Compile Include="Core\Extensions\TutorialExtensions.cs" />
     <Compile Include="Core\FormsData\FormAngles.cs" />
+    <Compile Include="Core\FormsData\FormDwPosition.cs" />
     <Compile Include="Core\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
