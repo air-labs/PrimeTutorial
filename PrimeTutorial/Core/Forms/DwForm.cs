@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Drawing;
+using PrimeTutorial.Core.FormsData;
 
 namespace PrimeTutorial.Core.Forms
 {
     public partial class DwForm : BaseForm
     {
-        private readonly ConcurrentQueue<Tuple<double, double, double>> _points = new ConcurrentQueue<Tuple<double, double, double>>();
+        private readonly ConcurrentQueue<FormDwPosition> _queue = new ConcurrentQueue<FormDwPosition>();
 
-        private Tuple<double, double, double> _point = new Tuple<double, double, double>(0, 0, 0);
+        private FormDwPosition _position = new FormDwPosition(0, 0, 0);
 
         public DwForm()
         {
             InitializeComponent();
         }
 
-        public void SetPosition(Tuple<double, double, double> point)
+        public void SetPosition(FormDwPosition position)
         {
-            _points.Enqueue(point);
+            _queue.Enqueue(position);
         }
 
         protected override void InitializeGraphics()
@@ -40,14 +41,14 @@ namespace PrimeTutorial.Core.Forms
 
             PushGraphics();
 
-            Tuple<double, double, double> point;
-            if (!_points.IsEmpty && _points.TryDequeue(out point))
+            FormDwPosition position;
+            if (!_queue.IsEmpty && _queue.TryDequeue(out position))
             {
-                _point = point;
+                _position = position;
             }
 
-            TranslateGraphics(_point.Item1, _point.Item2);
-            RotateGraphics(_point.Item3);
+            TranslateGraphics(_position.X, _position.Y);
+            RotateGraphics(_position.Angle);
             
             DrawRectangle(Brushes.MediumAquamarine, 0, 0, 2, 1);
             

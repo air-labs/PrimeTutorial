@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Prime;
 using PrimeTutorial.Core.Data;
 using PrimeTutorial.Core.Forms;
+using PrimeTutorial.Core.FormsData;
 
 namespace PrimeTutorial.Core.FunctionalBlocks
 {
@@ -72,7 +73,7 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
             _angle += angle;
 
-            _form.SetPosition(Tuple.Create<double, double, double>(_matrix.OffsetX, _matrix.OffsetY, _angle));
+            _form.SetPosition(new FormDwPosition(_matrix.OffsetX, _matrix.OffsetY, _angle));
         }
     }
 }
