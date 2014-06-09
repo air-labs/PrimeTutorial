@@ -28,17 +28,16 @@ namespace PrimeTutorial.Core.FunctionalBlocks
         public bool Process(Dwm input)
         {
             var time = 0d;
+            var delta = Delta;
 
-            while (time < input.Time)
+            while (Math.Abs(delta) > 0.001)
             {
-                CalculatePosition(input, time, Delta);
+                delta = time + Delta < input.Time ? Delta : input.Time - time;
+                CalculatePosition(input, time, delta);
 
-                time += Delta;
+                time += delta;
                 Thread.Sleep(Delay);
             }
-
-            CalculatePosition(input, input.Time, time - input.Time);
-            Thread.Sleep(Delay);
 
             return true;
         }
