@@ -25,7 +25,7 @@ namespace PrimeTutorial.Core.Forms
         {
             base.InitializeGraphics();
             TranslateGraphics(ClientRectangle.Width / 2.0, ClientRectangle.Height / 2.0);
-            ScaleGraphics(25);
+            ScaleGraphics(10);
         }
 
         private void DwForm_Load(object sender, EventArgs e)
@@ -36,8 +36,8 @@ namespace PrimeTutorial.Core.Forms
 
         private void DwForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            DrawLine(AxisPen, 0, 10, 0, -10);
-            DrawLine(AxisPen, 10, 0, -10, 0);
+            DrawLine(AxisPen, 0, 25, 0, -25);
+            DrawLine(AxisPen, 25, 0, -25, 0);
 
             PushGraphics();
 

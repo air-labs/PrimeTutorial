@@ -17,6 +17,8 @@ namespace PrimeTutorial.Core.FunctionalBlocks
         private const double Base = 1;
         private const double Delta = 0.1;
 
+        private const Double Epsilon = 0.0000001;
+
         private readonly Matrix _matrix = new Matrix();
         private double _angle;
 
@@ -27,6 +29,11 @@ namespace PrimeTutorial.Core.FunctionalBlocks
 
         public bool Process(Dwm input)
         {
+            if (Math.Abs(input.Time) < Epsilon)
+            {
+                return true;
+            }
+
             var time = 0d;
             var delta = Delta;
 
